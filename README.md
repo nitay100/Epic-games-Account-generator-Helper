@@ -7,7 +7,7 @@ Table of Contents
     Usage Instructions 📝
     Troubleshooting ❗
     Frequently Asked Questions (FAQ) ❓
-    Contact Information 📞
+    Build Project 📥
 
 1. Introduction 🚀
 
@@ -49,7 +49,17 @@ Q: Can I use the same email address to create multiple Epic Games accounts?
 A: No, each Epic Games account requires a unique email address. Please provide a different email address for each account you want to create.
 
 Q: Is it legal to use the Epic Games Account Creator?
-A: The Epic Games Account Creator is a tool designed to facilitate the account creation process. However, it is your responsibility to ensure that you use the program in accordance with the terms and conditions set by Epic Games. Please refer to Epic Games' official documentation for more information.
+A: The Epic Games Account Creator is a tool designed to facilitate the account creation process. However, it is your responsibility to ensure that you use the program in accordance with the terms and conditions 
+set by Epic Games. Please refer to Epic Games' official documentation for more information.
+
+
 
 Q: Can I customize my account details after using the Epic Games Account Creator?
 A: Yes, once your account is created, you can log in to the Epic Games platform and modify your account details, including username, profile picture, and more.
+
+6. Build Project 📥
+
+   Download source files
+   open cmd in the files folder
+   run pip install -r requirements.txt
+   open main.py and thats it!
